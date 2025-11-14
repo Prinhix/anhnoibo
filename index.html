@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nội bộ</title>
+  <title>Ảnh nội bộ</title>
 
   <style>
     body {
@@ -64,11 +64,13 @@
 </div>
 
 <script>
-  /* --- CHỈ CHO PHÉP TRUY CẬP ĐÚNG TRANG --- */
-  const allowedURL = "https://prinhix.github.io/anhnoibo/";
-  if (location.href !== allowedURL) {
+  /* --- CHẶN TRUY CẬP TRỰC TIẾP --- */
+  const requiredRef = "https://prinhix.github.io/ktramaso/";
+
+  if (document.referrer !== requiredRef) {
     document.body.innerHTML =
-      "<h1 style='color:red;text-align:center;margin-top:20%;'>Không thể trực tiếp truy cập trang web</h1>";
+      "<h1 style='color:red;text-align:center;margin-top:20%;'>Không thể truy cập trang web trực tiếp</h1>";
+    throw new Error("Blocked direct access");
   }
 
 
