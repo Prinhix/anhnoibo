@@ -1,74 +1,75 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ảnh nội bộ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nội bộ</title>
 
-<style>
-  body {
-    margin: 0;
-    background: #ffffff;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  <style>
+    body {
+      margin: 0;
+      background: #ffffff;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #3a86ff;
+    }
 
-  #container {
-    width: 70%;
-    height: 85%;
-    border: 3px solid #3a86ff;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    #container {
+      width: 70%;
+      height: 85%;
+      border: 3px solid #3a86ff;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  #upload-area {
-    font-size: 80px;
-    color: #3a86ff;
-    cursor: pointer;
-  }
+    #upload-area {
+      font-size: 80px;
+      color: #3a86ff;
+      cursor: pointer;
+    }
 
-  #download-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 40px;
-    color: #3a86ff;
-    user-select: none;
-  }
+    #download-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 40px;
+      color: #3a86ff;
+      user-select: none;
+    }
 
-  #preview {
-    max-width: 100%;
-    max-height: 100%;
-    display: none;
-  }
-</style>
+    #preview {
+      max-width: 100%;
+      max-height: 100%;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
 <div id="container">
-
   <div id="download-btn">⬇️</div>
-
   <input type="file" id="file-input" accept="image/*" style="display:none">
-
   <img id="preview">
-
   <div id="upload-area">+</div>
-
 </div>
 
 <script>
-  // Chặn truy cập trực tiếp
-  const allowedURL = "https://prinhix.github.io/ktramaso/";
+  /* KIỂM SOÁT TRUY CẬP CHỈ DÀNH CHO TRANG ANHNOIBO */
+
+  const allowedURL = "https://prinhix.github.io/anhnoibo/";
+
   if (location.href !== allowedURL) {
-    document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%;'>Không thể trực tiếp truy cập trang web</h1>";
+    document.body.innerHTML =
+      "<h1 style='color:red;text-align:center;margin-top:20%;'>Không thể trực tiếp truy cập trang web</h1>";
   }
+
+  /* UPLOAD ẢNH 1 LẦN */
 
   let uploaded = false;
 
