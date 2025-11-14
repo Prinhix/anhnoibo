@@ -31,6 +31,7 @@
       font-size: 80px;
       color: #3a86ff;
       cursor: pointer;
+      user-select: none;
     }
 
     #download-btn {
@@ -54,30 +55,44 @@
 
 <div id="container">
   <div id="download-btn">⬇️</div>
+
   <input type="file" id="file-input" accept="image/*" style="display:none">
+
   <img id="preview">
+
   <div id="upload-area">+</div>
 </div>
 
 <script>
-  /* KIỂM SOÁT TRUY CẬP CHỈ DÀNH CHO TRANG ANHNOIBO */
-
+  /* --- CHỈ CHO PHÉP TRUY CẬP ĐÚNG TRANG --- */
   const allowedURL = "https://prinhix.github.io/anhnoibo/";
-
   if (location.href !== allowedURL) {
     document.body.innerHTML =
       "<h1 style='color:red;text-align:center;margin-top:20%;'>Không thể trực tiếp truy cập trang web</h1>";
   }
 
-  /* UPLOAD ẢNH 1 LẦN */
 
-  let uploaded = false;
-
+  /* --- LẤY ELEMENT --- */
   const upload = document.getElementById("upload-area");
   const input = document.getElementById("file-input");
   const preview = document.getElementById("preview");
   const downloadBtn = document.getElementById("download-btn");
 
+  let uploaded = false;
+
+
+  /* --- KHÔI PHỤC ẢNH ĐÃ LƯU --- */
+  const savedImage = localStorage.getItem("savedImage");
+
+  if (savedImage) {
+    preview.src = savedImage;
+    preview.style.display = "block";
+    upload.style.display = "none";
+    uploaded = true;
+  }
+
+
+  /* --- UPLOAD ẢNH LẦN ĐẦU --- */
   upload.onclick = () => {
     if (!uploaded) input.click();
   };
@@ -86,13 +101,29 @@
     const file = input.files[0];
     if (!file) return;
 
-    uploaded = true;
-    const url = URL.createObjectURL(file);
-    preview.src = url;
-    preview.style.display = "block";
-    upload.style.display = "none";
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Dung lượng file phải < 5MB");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const base64 = reader.result;
+
+      localStorage.setItem("savedImage", base64);
+
+      preview.src = base64;
+      preview.style.display = "block";
+      upload.style.display = "none";
+      uploaded = true;
+    };
+
+    reader.readAsDataURL(file);
   };
 
+
+  /* --- TẢI XUỐNG ẢNH --- */
   downloadBtn.onclick = () => {
     if (!uploaded) return;
 
